@@ -117,15 +117,15 @@ public class CardManager : MonoBehaviour
         rightButton.GetComponentInChildren<Text>().text = choices[currentScenario][1];
 
         // Barlarý ve textleri güncelle
-        UpdateBarAndText(moneyBar, moneyText, money, "Para");
-        UpdateBarAndText(powerBar, powerText, power, "Güç");
-        UpdateBarAndText(technologyBar, technologyText, technology, "Teknoloji");
-        UpdateBarAndText(successBar, successText, success, "Baþarý");
+        UpdateBarAndText(moneyBar, moneyText, money, "");
+        UpdateBarAndText(powerBar, powerText, power, "");
+        UpdateBarAndText(technologyBar, technologyText, technology, "");
+        UpdateBarAndText(successBar, successText, success, "");
     }
 
     void UpdateBarAndText(Image bar, Text text, int value, string categoryName)
     {
         bar.fillAmount = value / 100f;
-        text.text = $"{categoryName}: {value}%";
+        text.text = $"{categoryName} {value}";
     }
 }
