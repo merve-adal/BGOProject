@@ -431,7 +431,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e24237cefd9cf66428f4e6ad956ec764, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b11d5c5fbb0c92488405f7d9cf3bdbb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -593,7 +593,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191684414}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 149d864443ddca94ba93b092e7acd5ea, type: 3}
   m_Name: 
@@ -762,7 +762,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200970906}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 149d864443ddca94ba93b092e7acd5ea, type: 3}
   m_Name: 
@@ -1065,7 +1065,7 @@ GameObject:
   - component: {fileID: 551783391}
   - component: {fileID: 551783390}
   m_Layer: 5
-  m_Name: Bar
+  m_Name: succesBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1627,7 +1627,7 @@ GameObject:
   - component: {fileID: 1101821691}
   - component: {fileID: 1101821690}
   m_Layer: 5
-  m_Name: Text
+  m_Name: succText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1838,7 +1838,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181890141}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 149d864443ddca94ba93b092e7acd5ea, type: 3}
   m_Name: 
@@ -1954,7 +1954,7 @@ GameObject:
   - component: {fileID: 1489652279}
   - component: {fileID: 1489652278}
   m_Layer: 5
-  m_Name: Text
+  m_Name: techText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2289,7 +2289,7 @@ GameObject:
   - component: {fileID: 1688914089}
   - component: {fileID: 1688914088}
   m_Layer: 5
-  m_Name: Text
+  m_Name: powerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2540,7 +2540,7 @@ GameObject:
   - component: {fileID: 1849402562}
   - component: {fileID: 1849402561}
   m_Layer: 5
-  m_Name: Bar
+  m_Name: powerBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2683,7 +2683,7 @@ GameObject:
   - component: {fileID: 2062805031}
   - component: {fileID: 2062805030}
   m_Layer: 5
-  m_Name: Bar
+  m_Name: techBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2797,10 +2797,14 @@ MonoBehaviour:
   storyText: {fileID: 903197159}
   leftButton: {fileID: 393362410}
   rightButton: {fileID: 345772031}
-  powerBar: {fileID: 200970909}
-  successBar: {fileID: 1181890144}
-  technologyBar: {fileID: 191684417}
-  moneyBar: {fileID: 114769781777729927}
+  powerBar: {fileID: 1849402561}
+  powerText: {fileID: 1688914088}
+  technologyBar: {fileID: 2062805030}
+  technologyText: {fileID: 1489652278}
+  moneyBar: {fileID: 114542602092016179}
+  moneyText: {fileID: 114165064011488115}
+  successBar: {fileID: 551783390}
+  successText: {fileID: 1101821690}
 --- !u!1 &1117938477010567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2832,7 +2836,7 @@ GameObject:
   - component: {fileID: 222369660706666487}
   - component: {fileID: 114165064011488115}
   m_Layer: 5
-  m_Name: Text
+  m_Name: moneyText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2850,7 +2854,7 @@ GameObject:
   - component: {fileID: 222721447177934763}
   - component: {fileID: 114542602092016179}
   m_Layer: 5
-  m_Name: Bar
+  m_Name: moneyBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3168,7 +3172,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1825480800246699}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 149d864443ddca94ba93b092e7acd5ea, type: 3}
   m_Name: 

@@ -3,195 +3,129 @@ using UnityEngine.UI;
 
 public class CardManager : MonoBehaviour
 {
-    // UI References
+    // UI Referanslarý
     public Text storyText;
     public Button leftButton;
     public Button rightButton;
 
-    // Progress Bars for Parameters
-    public ProgressBar powerBar;
-    public ProgressBar successBar;
-    public ProgressBar technologyBar;
-    public ProgressBar moneyBar;
+    // Kategori Barlarý ve Textleri
+    public Image powerBar;
+    public Text powerText;
+    public Image technologyBar;
+    public Text technologyText;
+    public Image moneyBar;
+    public Text moneyText;
+    public Image successBar;
+    public Text successText;
 
-    // Resource Values
+    // Kategori Deðerleri
     private int power = 50;
-    private int success = 50;
     private int technology = 50;
     private int money = 50;
+    private int success = 50;
 
-    // Current Card and Decision
-    private int currentCardIndex = 0;
-
-    // Story Card Data
-    private string[] storyCards = {
-        "Yüksek riskli bir uyuþturucu sevkiyatý önerisi aldýn. Kabul edersen, çetenin gücünü artýrabilirsin ama maliyeti yüksek olacak. Kabul ediyor musun?",
-        "Çetene, düþmanlarý alt etmek için son teknoloji bir savaþ dronu sunuluyor. Bu dronu almak büyük bir teknoloji sýçramasý yapmaný saðlayacak, ancak bakým ve iþletim maliyetleri yüksek. Kabul ediyor musun?",
-       "Çetene bir siber güvenlik sistemi kurman öneriliyor. Bu sistemle rakip hackerlardan korunabilir, ancak kurulum ve sürekli güncellemeler için büyük bir yatýrým yapman gerekecek. Kabul ediyor musun?",
-        "Yeraltý dünyasýnýn en prestijli mühendislerinden biri, sana özel olarak geliþtirilmiþ, yüksek teknolojili bir aracý tanýtýyor . Satýn almayý kabul ediyor musun?",
-        "Geliþmiþ bir izleme sistemi satýn alarak rakip çetelerin her adýmýný izleyebilir, böylece operasyonel üstünlük saðlayabilirsin. Ancak bu teknolojinin kurulumu ve bakýmý zor ve pahalý. Kabul ediyor musun?" ,
-        "Rakip çetenin liderine karþý teke tek bir düello daveti aldýn. Bu, seni çete içinde bir efsane yapabilir, ama kaybedersen çetenin itibarý zarar görebilir. Kabul ediyor musun?",
-        "Çete lideri, kritik bir operasyon için seni görevlendirdi. Bu görevde çetenin gücünü önemli ölçüde artýracak stratejik bir hamle yapman gerekiyor. Ancak, bu görevde liderin talimatlarýný harfiyen uygulamak zorundasýn, bu da senin bireysel olarak parlamaný engelleyecek. Görevi kabul edersen, çete güç kazanacak ama senin kendi baþarýlarýn gölgede kalacak. Kabul ediyor musun?",
-        "Rakip bir çeteye karþý büyük bir saldýrý düzenleyebilirsin. Bu saldýrý, çetene büyük bir güç kazandýracak, fakat operasyon oldukça maliyetli. Kabul ediyor musun?"
+    // Senaryo ve Seçim Verileri
+    private string[] scenarios = {
+        "Bir hacker sana gizli bir veritabaný sunuyor. Bu veritabaný, mega þirketlerin en üst düzey yöneticilerinin karanlýk sýrlarýný içeriyor.",
+        "Karanlýk bir sokakta bir bilim insaný seni durduruyor ve sana yasa dýþý bir teknoloji satmak istiyor.",
+        "Bir mega þirket, sana büyük bir rüþvet teklif ediyor, ancak bu teklifi kabul etmek itibarýni sarsabilir.",
+        "Bir teknoloji konferansýna davet edildin. Orada konuþmacý olman, sektörle ilgili itibarýný artýrabilir.",
+        "Siber bir saldýrý ile mega bir þirketin güvenlik sistemine sýzma fýrsatýn var."
     };
 
-    // Arrays to categorize scenarios
-    private int[] techMoneyList = { 0 }; // Teknoloji ve Para
-    private int[] techPowerList = { 1 }; // Teknoloji ve Güç
-    private int[] techSuccessList = { 2 }; // Teknoloji ve Baþarý
-    private int[] moneyPowerList = {3 }; // Para ve Güç
-    private int[] moneySuccessList = { 4 }; // Para ve Baþarý
-    private int[] powerSuccessList = { 5, 6, 7 }; // Güç ve Baþarý
+    private string[][] choices = {
+        new string[] {"Reddet", "Kabul Et"},
+        new string[] {"Reddet", "Satýn Al"},
+        new string[] {"Reddet", "Kabul Et"},
+        new string[] {"Gitme", "Konuþ"},
+        new string[] {"Geri Çekil", "Sýz"}
+    };
+
+    // Her seçim için kategori deðiþiklikleri: Reddet (Ýlk 4), Kabul Et (Son 4)
+    private int[][] outcomes = {
+        new int[] {0, -20, -10, 0, 0, 20, 10, 0},  // Senaryo 1
+        new int[] {0, -20, 0, 0, 0, 30, -10, 0},  // Senaryo 2
+        new int[] {-20, 0, 0, -20, 0, 0, 30, 10},  // Senaryo 3
+        new int[] {0, 0, 0, -10, 0, 0, 0, 20},  // Senaryo 4
+        new int[] {0, 10, 0, -10, 10, 20, 0, -10}  // Senaryo 5
+    };
+
+    // Þu anki senaryo indeksi
+    private int currentScenario = 0;
 
     void Start()
     {
-        // Set initial values for progress bars
-        UpdateProgressBars();
+        UpdateUI();
 
-        // Add listeners to buttons
-        leftButton.onClick.AddListener(() =>
-        {
-            int choiceIndex = 0;
-            MakeChoice(choiceIndex);
-        });
-        rightButton.onClick.AddListener(() =>
-        {
-            int choiceIndex = 1;
-        MakeChoice(choiceIndex);
-        });
-
-        // Display the first card
-        UpdateCard();
+        // Butonlara týklama olaylarýný ekle
+        leftButton.onClick.AddListener(() => MakeChoice(0));
+        rightButton.onClick.AddListener(() => MakeChoice(1));
     }
 
-    void UpdateCard()
+    void MakeChoice(int choiceIndex)
     {
-        if (currentCardIndex >= storyCards.Length)
+        // Seçim sonucu deðiþecek deðerler
+        int powerChange = 0;
+        int technologyChange = 0;
+        int moneyChange = 0;
+        int successChange = 0;
+
+        // Seçime göre deðerleri belirle
+        if (choiceIndex == 0) // Sol seçim (Reddi Et)
         {
-            EndGame();
-            return;
+            powerChange = outcomes[currentScenario][0];
+            technologyChange = outcomes[currentScenario][1];
+            moneyChange = outcomes[currentScenario][2];
+            successChange = outcomes[currentScenario][3];
+        }
+        else if (choiceIndex == 1) // Sað seçim (Kabul Et)
+        {
+            powerChange = outcomes[currentScenario][4];
+            technologyChange = outcomes[currentScenario][5];
+            moneyChange = outcomes[currentScenario][6];
+            successChange = outcomes[currentScenario][7];
         }
 
-        storyText.text = storyCards[currentCardIndex];
+        // Deðerleri güncelle
+        power += powerChange;
+        technology += technologyChange;
+        money += moneyChange;
+        success += successChange;
+
+        // Deðerleri sýnýrla
+        power = Mathf.Clamp(power, 0, 100);
+        technology = Mathf.Clamp(technology, 0, 100);
+        money = Mathf.Clamp(money, 0, 100);
+        success = Mathf.Clamp(success, 0, 100);
+
+        // Konsolda hangi deðerin nasýl deðiþtiðini kontrol et
+        Debug.Log($"Güç: {powerChange}, Teknoloji: {technologyChange}, Para: {moneyChange}, Baþarý: {successChange}");
+        Debug.Log($"Güncel Deðerler -> Güç: {power}, Teknoloji: {technology}, Para: {money}, Baþarý: {success}");
+
+        // UI'yý güncelle
+        UpdateUI();
+
+        // Bir sonraki senaryoya geç
+        currentScenario = (currentScenario + 1) % scenarios.Length;
     }
 
-    public void MakeChoice(int choiceIndex)
+    void UpdateUI()
     {
-        // Check which list the current card belongs to
-        if (IsInList(currentCardIndex, techMoneyList))
-        {
-            if (choiceIndex == 0)
-            {
-                technology -= 10;
-                money += 10;
-            }
-            else
-            {
-                technology += 10;
-                money -= 10;
-            }
-        }
-        else if (IsInList(currentCardIndex, techPowerList))
-        {
-            if (choiceIndex == 0)
-            {
-                technology -= 10;
-                power += 10;
-            }
-            else
-            {
-                technology += 10;
-                power -= 10;
-            }
-        }
-        else if (IsInList(currentCardIndex, techSuccessList))
-        {
-            if (choiceIndex == 0)
-            {
-                technology -= 10;
-                success += 10;
-            }
-            else
-            {
-                technology += 10;
-                success -= 10;
-            }
-        }
-        else if (IsInList(currentCardIndex, moneyPowerList))
-        {
-            if (choiceIndex == 0)
-            {
-                money -= 10;
-                power += 10;
-            }
-            else
-            {
-                money += 10;
-                power -= 10;
-            }
-        }
-        else if (IsInList(currentCardIndex, moneySuccessList))
-        {
-            if (choiceIndex == 0)
-            {
-                money -= 10;
-                success += 10;
-            }
-            else
-            {
-                money += 10;
-                success -= 10;
-            }
-        }
-        else if (IsInList(currentCardIndex, powerSuccessList))
-        {
-            if (choiceIndex == 0)
-            {
-                power -= 10;
-                success += 10;
-            }
-            else
-            {
-                power += 10;
-                success -= 10;
-            }
-        }
+        // Senaryoyu ve seçimleri güncelle
+        storyText.text = scenarios[currentScenario];
+        leftButton.GetComponentInChildren<Text>().text = choices[currentScenario][0];
+        rightButton.GetComponentInChildren<Text>().text = choices[currentScenario][1];
 
-        // Log the updated values
-        Debug.Log($"Güç: {power}, Baþarý: {success}, Teknoloji: {technology}, Para: {money}");
-
-        // Update progress bars
-        UpdateProgressBars();
-
-        // Move to the next card
-        currentCardIndex++;
-        UpdateCard();
+        // Barlarý ve textleri güncelle
+        UpdateBarAndText(moneyBar, moneyText, money, "Para");
+        UpdateBarAndText(powerBar, powerText, power, "Güç");
+        UpdateBarAndText(technologyBar, technologyText, technology, "Teknoloji");
+        UpdateBarAndText(successBar, successText, success, "Baþarý");
     }
 
-
-    bool IsInList(int index, int[] list)
+    void UpdateBarAndText(Image bar, Text text, int value, string categoryName)
     {
-        foreach (int i in list)
-        {
-            if (i == index)
-                return true;
-        }
-        return false;
-    }
-
-    void UpdateProgressBars()
-    {
-        // Update progress bars with the current values of the parameters
-        powerBar.BarValue = power;
-        successBar.BarValue = success;
-        technologyBar.BarValue = technology;
-        moneyBar.BarValue = money;
-    }
-
-    void EndGame()
-    {
-        storyText.text = "Oyun Bitti!";
-        leftButton.gameObject.SetActive(false);
-        rightButton.gameObject.SetActive(false);
+        bar.fillAmount = value / 100f;
+        text.text = $"{categoryName}: {value}%";
     }
 }
