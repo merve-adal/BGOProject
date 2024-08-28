@@ -25,35 +25,23 @@ public class CardManager : MonoBehaviour
 
     // Story Card Data
     private string[] storyCards = {
-        "Ana siber güvenlik merkezine ilk saldýrýnýzý planlýyorsunuz. Çalýþanlarýn çoðu gece vardiyasýnda olacak. Direkt bir saldýrý mý yapacaksýnýz, yoksa içeri sýzmak için bir güvenlik açýðý mý arayacaksýnýz?",
-        "Siber güvenlik merkezi sizi fark etti ve alarmý devreye soktu. Þu anda geri çekilme veya alarmý devre dýþý býrakma arasýnda karar vermelisiniz.",
-        "Bir grup direniþçi, megakorporasyonun önemli bir tesisine saldýrmak için destek istiyor. Ancak, bu size pahalýya patlayabilir. Destek verecek misiniz?",
-        "Gizli bir bilgi kaynaðý, bir sonraki teknoloji sevkiyatýný kesmenin büyük bir avantaj saðlayacaðýný söylüyor. Ama bu tehlikeli bir operasyon olacak.",
-        "Þehrin yeraltý siyasetinde önemli bir figür, direniþle iþ birliði yapmak istiyor. Ancak onunla çalýþmak imajýnýza zarar verebilir.",
-        "Mega þirketin CEO'su size gizli bir anlaþma teklif ediyor: Belirli bir bölgeyi boþaltýrsanýz, size yüksek miktarda para verecek.",
-        "Ana þirket binasýna nihai saldýrýyý planlýyorsunuz. Güçlü bir EMP cihazý kullanmak, düþmanýn tüm savunmalarýný devre dýþý býrakabilir, ancak bu direniþin tüm teknoloji kaynaklarýný tüketecektir.",
-        "Son saldýrýnýzdan sonra, direniþ üyelerinizden bazýlarý þehri terk etmek ve güvenli bir yere gitmek istiyor. Onlarý tutacak mýsýnýz?"
+        "Yüksek riskli bir uyuþturucu sevkiyatý önerisi aldýn. Kabul edersen, çetenin gücünü artýrabilirsin ama maliyeti yüksek olacak. Kabul ediyor musun?",
+        "Çetene, düþmanlarý alt etmek için son teknoloji bir savaþ dronu sunuluyor. Bu dronu almak büyük bir teknoloji sýçramasý yapmaný saðlayacak, ancak bakým ve iþletim maliyetleri yüksek. Kabul ediyor musun?",
+       "Çetene bir siber güvenlik sistemi kurman öneriliyor. Bu sistemle rakip hackerlardan korunabilir, ancak kurulum ve sürekli güncellemeler için büyük bir yatýrým yapman gerekecek. Kabul ediyor musun?",
+        "Yeraltý dünyasýnýn en prestijli mühendislerinden biri, sana özel olarak geliþtirilmiþ, yüksek teknolojili bir aracý tanýtýyor . Satýn almayý kabul ediyor musun?",
+        "Geliþmiþ bir izleme sistemi satýn alarak rakip çetelerin her adýmýný izleyebilir, böylece operasyonel üstünlük saðlayabilirsin. Ancak bu teknolojinin kurulumu ve bakýmý zor ve pahalý. Kabul ediyor musun?" ,
+        "Rakip çetenin liderine karþý teke tek bir düello daveti aldýn. Bu, seni çete içinde bir efsane yapabilir, ama kaybedersen çetenin itibarý zarar görebilir. Kabul ediyor musun?",
+        "Çete lideri, kritik bir operasyon için seni görevlendirdi. Bu görevde çetenin gücünü önemli ölçüde artýracak stratejik bir hamle yapman gerekiyor. Ancak, bu görevde liderin talimatlarýný harfiyen uygulamak zorundasýn, bu da senin bireysel olarak parlamaný engelleyecek. Görevi kabul edersen, çete güç kazanacak ama senin kendi baþarýlarýn gölgede kalacak. Kabul ediyor musun?",
+        "Rakip bir çeteye karþý büyük bir saldýrý düzenleyebilirsin. Bu saldýrý, çetene büyük bir güç kazandýracak, fakat operasyon oldukça maliyetli. Kabul ediyor musun?"
     };
 
-    // Left and Right Choices Effects
-    private int[,] choicesEffects = {
-        { 10, -10, 0, 0 }, // Card 1: Left Choice: Power +10, Success -10
-        { -10, 0, 10, 0 }, // Card 1: Right Choice: Success +10, Power -10
-        { 0, -10, 0, 10 }, // Card 2: Left Choice: Success -10, Money +10
-        { 10, 0, -10, 0 }, // Card 2: Right Choice: Power +10, Technology -10
-        { 0, 0, -10, 10 }, // Card 3: Left Choice: Technology -10, Money +10
-        { -10, 0, 0, 10 }, // Card 3: Right Choice: Power -10, Success +10
-        { 0, -10, 10, 0 }, // Card 4: Left Choice: Success -10, Technology +10
-        { 10, 0, 0, -10 }, // Card 4: Right Choice: Power +10, Money -10
-        { 10, 0, -10, 0 }, // Card 5: Left Choice: Power +10, Technology -10
-        { -10, 10, 0, 0 }, // Card 5: Right Choice: Success +10, Power -10
-        { 0, -10, 10, 0 }, // Card 6: Left Choice: Success -10, Technology +10
-        { 10, 0, 0, -10 }, // Card 6: Right Choice: Power +10, Money -10
-        { -10, 0, 10, 0 }, // Card 7: Left Choice: Power -10, Technology +10
-        { 10, -10, 0, 0 }, // Card 7: Right Choice: Power +10, Success -10
-        { 0, 10, 0, -10 }, // Card 8: Left Choice: Success +10, Money -10
-        { -10, 0, 10, 0 }  // Card 8: Right Choice: Power -10, Technology +10
-    };
+    // Arrays to categorize scenarios
+    private int[] techMoneyList = { 0 }; // Teknoloji ve Para
+    private int[] techPowerList = { 1 }; // Teknoloji ve Güç
+    private int[] techSuccessList = { 2 }; // Teknoloji ve Baþarý
+    private int[] moneyPowerList = {3 }; // Para ve Güç
+    private int[] moneySuccessList = { 4 }; // Para ve Baþarý
+    private int[] powerSuccessList = { 5, 6, 7 }; // Güç ve Baþarý
 
     void Start()
     {
@@ -61,8 +49,16 @@ public class CardManager : MonoBehaviour
         UpdateProgressBars();
 
         // Add listeners to buttons
-        leftButton.onClick.AddListener(() => MakeChoice(0));
-        rightButton.onClick.AddListener(() => MakeChoice(1));
+        leftButton.onClick.AddListener(() =>
+        {
+            int choiceIndex = 0;
+            MakeChoice(choiceIndex);
+        });
+        rightButton.onClick.AddListener(() =>
+        {
+            int choiceIndex = 1;
+        MakeChoice(choiceIndex);
+        });
 
         // Display the first card
         UpdateCard();
@@ -81,11 +77,85 @@ public class CardManager : MonoBehaviour
 
     public void MakeChoice(int choiceIndex)
     {
-        // Update parameter values based on choice
-        power += choicesEffects[currentCardIndex * 2 + choiceIndex, 0];
-        success += choicesEffects[currentCardIndex * 2 + choiceIndex, 1];
-        technology += choicesEffects[currentCardIndex * 2 + choiceIndex, 2];
-        money += choicesEffects[currentCardIndex * 2 + choiceIndex, 3];
+        // Check which list the current card belongs to
+        if (IsInList(currentCardIndex, techMoneyList))
+        {
+            if (choiceIndex == 0)
+            {
+                technology -= 10;
+                money += 10;
+            }
+            else
+            {
+                technology += 10;
+                money -= 10;
+            }
+        }
+        else if (IsInList(currentCardIndex, techPowerList))
+        {
+            if (choiceIndex == 0)
+            {
+                technology -= 10;
+                power += 10;
+            }
+            else
+            {
+                technology += 10;
+                power -= 10;
+            }
+        }
+        else if (IsInList(currentCardIndex, techSuccessList))
+        {
+            if (choiceIndex == 0)
+            {
+                technology -= 10;
+                success += 10;
+            }
+            else
+            {
+                technology += 10;
+                success -= 10;
+            }
+        }
+        else if (IsInList(currentCardIndex, moneyPowerList))
+        {
+            if (choiceIndex == 0)
+            {
+                money -= 10;
+                power += 10;
+            }
+            else
+            {
+                money += 10;
+                power -= 10;
+            }
+        }
+        else if (IsInList(currentCardIndex, moneySuccessList))
+        {
+            if (choiceIndex == 0)
+            {
+                money -= 10;
+                success += 10;
+            }
+            else
+            {
+                money += 10;
+                success -= 10;
+            }
+        }
+        else if (IsInList(currentCardIndex, powerSuccessList))
+        {
+            if (choiceIndex == 0)
+            {
+                power -= 10;
+                success += 10;
+            }
+            else
+            {
+                power += 10;
+                success -= 10;
+            }
+        }
 
         // Log the updated values
         Debug.Log($"Güç: {power}, Baþarý: {success}, Teknoloji: {technology}, Para: {money}");
@@ -96,6 +166,17 @@ public class CardManager : MonoBehaviour
         // Move to the next card
         currentCardIndex++;
         UpdateCard();
+    }
+
+
+    bool IsInList(int index, int[] list)
+    {
+        foreach (int i in list)
+        {
+            if (i == index)
+                return true;
+        }
+        return false;
     }
 
     void UpdateProgressBars()
