@@ -16,6 +16,10 @@ public class ChoiceSystem : MonoBehaviour
     public Text moneyText;
     public Text successText;
 
+    // Yeni eklenenler
+    public Image cardBackground; // Kart arka planý için Image
+    public Text cardText;         // Kart üzerindeki metin
+
     private int powerValue = 50;
     private int techValue = 50;
     private int moneyValue = 50;
@@ -41,6 +45,8 @@ public class ChoiceSystem : MonoBehaviour
 
     void DisplayScenario()
     {
+        // Kart üzerindeki metni ayarla
+        cardText.text = scenarios[currentScenario];
         scenarioText.text = scenarios[currentScenario];
     }
 
