@@ -16,9 +16,8 @@ public class ChoiceSystem : MonoBehaviour
     public Text moneyText;
     public Text successText;
 
-    // Yeni eklenenler
-    public Image cardBackground; // Kart arka planý için Image
-    public Text cardText;         // Kart üzerindeki metin
+    public Image cardImage; // Kartýn image bileþeni
+    public Text cardText;   // Kart üzerindeki metin
 
     private int powerValue = 50;
     private int techValue = 50;
@@ -35,6 +34,9 @@ public class ChoiceSystem : MonoBehaviour
         "Bir grup asi, þehirde bir ayaklanma baþlatmayý planlýyor. Onlara yardým etmeli misiniz?"
     };
 
+    // Kart görselleri için Sprite kaynaklarý
+    public Sprite[] cardImages; // Her senaryo için farklý bir kart görseli olabilir
+
     void Start()
     {
         UpdateCircleValues();
@@ -46,12 +48,30 @@ public class ChoiceSystem : MonoBehaviour
     void DisplayScenario()
     {
         // Kart üzerindeki metni ayarla
-        cardText.text = scenarios[currentScenario];
-        scenarioText.text = scenarios[currentScenario];
+        if (cardText != null && scenarioText != null)
+        {
+            cardText.text = scenarios[currentScenario];
+            scenarioText.text = scenarios[currentScenario];
+        }
+        else
+        {
+            Debug.LogError("cardText veya scenarioText atanmadý!");
+        }
+
+        // Kart görselini güncelle
+        if (cardImage != null && cardImages != null && cardImages.Length > currentScenario)
+        {
+            cardImage.sprite = cardImages[currentScenario]; // Sadece kartýn görselini deðiþtir
+        }
+        else
+        {
+            Debug.LogError("cardImage veya cardImages atanmadý ya da cardImages dizisi boþ veya yetersiz!");
+        }
     }
 
     void MakeChoice(bool accepted)
     {
+        // Senaryoya göre seçim sonuçlarýný iþle
         switch (currentScenario)
         {
             case 0:

@@ -312,6 +312,7 @@ RectTransform:
   m_Children:
   - {fileID: 6204024974363039738}
   - {fileID: 3365890363910839590}
+  - {fileID: 4216357654031961950}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1287,8 +1288,14 @@ MonoBehaviour:
   techText: {fileID: 6218273899746661157}
   moneyText: {fileID: 6227382308683083124}
   successText: {fileID: 2530894507587866781}
-  cardBackground: {fileID: 0}
+  cardImage: {fileID: 931172414598952629}
   cardText: {fileID: 1283007730}
+  cardImages:
+  - {fileID: 21300000, guid: 69ce03a3888d7bc47910bb279e29655c, type: 3}
+  - {fileID: 21300000, guid: d3ed0755bcba9514ab2027ec8497b4cb, type: 3}
+  - {fileID: 21300000, guid: ea1db8e16214266489c7be90c57ab166, type: 3}
+  - {fileID: 21300000, guid: 67850e5800537334c95fcec117b14be0, type: 3}
+  - {fileID: 21300000, guid: 000b7dd37ac21084f9c544869c675c31, type: 3}
 --- !u!224 &2936822646645458916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1583,11 +1590,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6204024974363039738}
+  m_Father: {fileID: 758978316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -826.50073, y: -335.67984}
+  m_AnchoredPosition: {x: -775.6522, y: -348.06042}
   m_SizeDelta: {x: 305.48, y: 402.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4858495454775176202
@@ -1982,7 +1989,6 @@ RectTransform:
   - {fileID: 6951991615038333637}
   - {fileID: 85623747323615889}
   - {fileID: 5487071309125944583}
-  - {fileID: 4216357654031961950}
   - {fileID: 1663024232538119490}
   - {fileID: 1698565341963560358}
   - {fileID: 264083975124671257}
@@ -2619,7 +2625,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &8405599554589955089
 GameObject:
   m_ObjectHideFlags: 0
