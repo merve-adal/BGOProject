@@ -732,7 +732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1072,7 +1072,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -50.848633, y: 12.380615, z: -0}
-  m_LocalScale: {x: 0.74074084, y: 0.74074084, z: 0.74074084}
+  m_LocalScale: {x: 0.74074084, y: 0.7407408, z: 0.7407408}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3927162430888488686}
@@ -1126,6 +1126,7 @@ GameObject:
   - component: {fileID: 7281047439202797874}
   - component: {fileID: 2355385469854062227}
   - component: {fileID: 5919451945938871648}
+  - component: {fileID: 7281047439202797875}
   m_Layer: 5
   m_Name: succesimg
   m_TagString: Untagged
@@ -1296,6 +1297,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ea1db8e16214266489c7be90c57ab166, type: 3}
   - {fileID: 21300000, guid: 67850e5800537334c95fcec117b14be0, type: 3}
   - {fileID: 21300000, guid: 000b7dd37ac21084f9c544869c675c31, type: 3}
+  powerAnimator: {fileID: 3815678803709938947}
+  techAnimator: {fileID: 3815678803709938947}
+  moneyAnimator: {fileID: 3815678803709938947}
+  successAnimator: {fileID: 3815678803709938947}
 --- !u!224 &2936822646645458916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1463,6 +1468,7 @@ GameObject:
   - component: {fileID: 9111998760921796783}
   - component: {fileID: 7004575973215430044}
   - component: {fileID: 1298763507381880033}
+  - component: {fileID: 9111998760921796784}
   m_Layer: 5
   m_Name: techimg
   m_TagString: Untagged
@@ -1508,6 +1514,7 @@ GameObject:
   - component: {fileID: 3365890363910839590}
   - component: {fileID: 6607107294490320293}
   - component: {fileID: 931172414598952629}
+  - component: {fileID: 6607107294490320294}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1524,6 +1531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1698565341963560358}
+  - component: {fileID: 3815678803709938947}
   m_Layer: 0
   m_Name: Barlar
   m_TagString: Untagged
@@ -1531,6 +1539,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &3815678803709938947
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3815678803709938946}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3c911e91226c0cb479f8c369501af455, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &3927162430888488686
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1608,6 +1637,7 @@ GameObject:
   - component: {fileID: 2597727516028907505}
   - component: {fileID: 3375869733104586158}
   - component: {fileID: 658313775311728247}
+  - component: {fileID: 4858495454775176203}
   m_Layer: 5
   m_Name: moneyimg
   m_TagString: Untagged
@@ -1615,6 +1645,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &4858495454775176203
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4858495454775176202}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 49b4b6352badd3d4a8a39e4b9c18ef21, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &4986130083363871665
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2145,6 +2196,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3693497005710352323}
   m_CullTransparentMesh: 1
+--- !u!95 &6607107294490320294
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3693497005710352323}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e761e70276577c4fb149397805e53d7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6700602994804125901
 GameObject:
   m_ObjectHideFlags: 0
@@ -2156,6 +2228,7 @@ GameObject:
   - component: {fileID: 3927162430888488686}
   - component: {fileID: 2415574398116001689}
   - component: {fileID: 5557875293398197972}
+  - component: {fileID: 6700602994804125902}
   m_Layer: 5
   m_Name: powerimg
   m_TagString: Untagged
@@ -2163,6 +2236,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &6700602994804125902
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6700602994804125901}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 49c6b1ad851baba41a2bd4a9f2a101c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &6951991615038333637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2302,6 +2396,27 @@ RectTransform:
   m_AnchoredPosition: {x: 219.23996, y: 712.8001}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &7281047439202797875
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932874831063250817}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc7585e1d6b24584e8a645a822a63069, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!222 &7290451972148143759
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2719,6 +2834,27 @@ RectTransform:
   m_AnchoredPosition: {x: -90.990005, y: 712.8001}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &9111998760921796784
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3401608276893215166}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91237f0534ae8ad4e826ba45240afec9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9112288490907662054
 GameObject:
   m_ObjectHideFlags: 0

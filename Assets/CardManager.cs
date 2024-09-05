@@ -37,6 +37,12 @@ public class ChoiceSystem : MonoBehaviour
     // Kart görselleri için Sprite kaynaklarý
     public Sprite[] cardImages; // Her senaryo için farklý bir kart görseli olabilir
 
+    // Animator bileþenleri için referanslar
+    public Animator powerAnimator;
+    public Animator techAnimator;
+    public Animator moneyAnimator;
+    public Animator successAnimator;
+
     void Start()
     {
         UpdateCircleValues();
@@ -77,65 +83,65 @@ public class ChoiceSystem : MonoBehaviour
             case 0:
                 if (accepted)
                 {
-                    ModifyCategories(ref powerValue, powerCircle, powerText, 10);
-                    ModifyCategories(ref techValue, techCircle, techText, -10);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, 10, powerAnimator);
+                    ModifyCategories(ref techValue, techCircle, techText, -10, techAnimator);
                 }
                 else
                 {
-                    ModifyCategories(ref techValue, techCircle, techText, 10);
-                    ModifyCategories(ref powerValue, powerCircle, powerText, -10);
+                    ModifyCategories(ref techValue, techCircle, techText, 10, techAnimator);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, -10, powerAnimator);
                 }
                 break;
 
             case 1:
                 if (accepted)
                 {
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10);
-                    ModifyCategories(ref powerValue, powerCircle, powerText, -10);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10, moneyAnimator);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, -10, powerAnimator);
                 }
                 else
                 {
-                    ModifyCategories(ref successValue, successCircle, successText, 10);
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10);
+                    ModifyCategories(ref successValue, successCircle, successText, 10, successAnimator);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10, moneyAnimator);
                 }
                 break;
 
             case 2:
                 if (accepted)
                 {
-                    ModifyCategories(ref techValue, techCircle, techText, 10);
-                    ModifyCategories(ref successValue, successCircle, successText, -10);
+                    ModifyCategories(ref techValue, techCircle, techText, 10, techAnimator);
+                    ModifyCategories(ref successValue, successCircle, successText, -10, successAnimator);
                 }
                 else
                 {
-                    ModifyCategories(ref powerValue, powerCircle, powerText, 10);
-                    ModifyCategories(ref techValue, techCircle, techText, -10);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, 10, powerAnimator);
+                    ModifyCategories(ref techValue, techCircle, techText, -10, techAnimator);
                 }
                 break;
 
             case 3:
                 if (accepted)
                 {
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10);
-                    ModifyCategories(ref successValue, successCircle, successText, -10);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10, moneyAnimator);
+                    ModifyCategories(ref successValue, successCircle, successText, -10, successAnimator);
                 }
                 else
                 {
-                    ModifyCategories(ref powerValue, powerCircle, powerText, 10);
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, 10, powerAnimator);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10, moneyAnimator);
                 }
                 break;
 
             case 4:
                 if (accepted)
                 {
-                    ModifyCategories(ref successValue, successCircle, successText, 10);
-                    ModifyCategories(ref powerValue, powerCircle, powerText, -10);
+                    ModifyCategories(ref successValue, successCircle, successText, 10, successAnimator);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, -10, powerAnimator);
                 }
                 else
                 {
-                    ModifyCategories(ref techValue, techCircle, techText, 10);
-                    ModifyCategories(ref successValue, successCircle, successText, -10);
+                    ModifyCategories(ref techValue, techCircle, techText, 10, techAnimator);
+                    ModifyCategories(ref successValue, successCircle, successText, -10, successAnimator);
                 }
                 break;
         }
@@ -153,11 +159,24 @@ public class ChoiceSystem : MonoBehaviour
         }
     }
 
-    void ModifyCategories(ref int categoryValue, Image categoryCircle, Text categoryText, int amount)
+    void ModifyCategories(ref int categoryValue, Image categoryCircle, Text categoryText, int amount, Animator animator)
     {
+        int oldValue = categoryValue; // Önceki deðeri sakla
         categoryValue = Mathf.Clamp(categoryValue + amount, 0, 100);
         categoryCircle.fillAmount = categoryValue / 100f;
         categoryText.text = categoryValue.ToString();
+
+        // Animasyonlarý tetikleme
+        if (categoryValue > oldValue)
+        {
+            // Deðer arttýysa büyüme animasyonunu tetikle
+            animator.SetTrigger("Grow");
+        }
+        else if (categoryValue < oldValue)
+        {
+            // Deðer azaldýysa küçülme animasyonunu tetikle
+            animator.SetTrigger("Shrink");
+        }
     }
 
     void UpdateCircleValues()
