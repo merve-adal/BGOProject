@@ -312,7 +312,6 @@ RectTransform:
   m_Children:
   - {fileID: 6204024974363039738}
   - {fileID: 3365890363910839590}
-  - {fileID: 4216357654031961950}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1297,10 +1296,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ea1db8e16214266489c7be90c57ab166, type: 3}
   - {fileID: 21300000, guid: 67850e5800537334c95fcec117b14be0, type: 3}
   - {fileID: 21300000, guid: 000b7dd37ac21084f9c544869c675c31, type: 3}
-  powerAnimator: {fileID: 3815678803709938947}
-  techAnimator: {fileID: 3815678803709938947}
-  moneyAnimator: {fileID: 3815678803709938947}
-  successAnimator: {fileID: 3815678803709938947}
+  powerAnimator: {fileID: 6700602994804125902}
+  techAnimator: {fileID: 9111998760921796784}
+  moneyAnimator: {fileID: 4858495454775176203}
+  successAnimator: {fileID: 7281047439202797875}
 --- !u!224 &2936822646645458916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1442,6 +1441,7 @@ RectTransform:
   - {fileID: 2936822646645458916}
   - {fileID: 1639894442036865361}
   - {fileID: 1283007729}
+  - {fileID: 4216357654031961950}
   m_Father: {fileID: 758978316}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1515,6 +1515,8 @@ GameObject:
   - component: {fileID: 6607107294490320293}
   - component: {fileID: 931172414598952629}
   - component: {fileID: 6607107294490320294}
+  - component: {fileID: 6607107294490320296}
+  - component: {fileID: 6607107294490320295}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -1532,7 +1534,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1698565341963560358}
   - component: {fileID: 3815678803709938947}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Barlar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1615,15 +1617,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 475549167983986446}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 27.795261}
+  m_LocalScale: {x: 2.3162723, y: 2.3162723, z: 2.3162723}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 758978316}
+  m_Father: {fileID: 3365890363910839590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -775.6522, y: -348.06042}
+  m_AnchoredPosition: {x: -1808.2029, y: -711.2354}
   m_SizeDelta: {x: 305.48, y: 402.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4858495454775176202
@@ -2217,6 +2219,65 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6607107294490320295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3693497005710352323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 643a85a0f41784c4ea7720534ea9eba0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _verticalMoveAmount: 30
+  _moveTime: 0.1
+  _scaleAmount: 1.1
+--- !u!114 &6607107294490320296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3693497005710352323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0.7176471, g: 0.7176471, b: 0.7176471, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 931172414598952629}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6700602994804125901
 GameObject:
   m_ObjectHideFlags: 0

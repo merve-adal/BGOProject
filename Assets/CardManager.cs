@@ -166,16 +166,10 @@ public class ChoiceSystem : MonoBehaviour
         categoryCircle.fillAmount = categoryValue / 100f;
         categoryText.text = categoryValue.ToString();
 
-        // Animasyonlarý tetikleme
+        // Sadece büyüme animasyonunu tetikle
         if (categoryValue > oldValue)
         {
-            // Deðer arttýysa büyüme animasyonunu tetikle
             animator.SetTrigger("Grow");
-        }
-        else if (categoryValue < oldValue)
-        {
-            // Deðer azaldýysa küçülme animasyonunu tetikle
-            animator.SetTrigger("Shrink");
         }
     }
 
