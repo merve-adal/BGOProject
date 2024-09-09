@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class ChoiceSystem : MonoBehaviour
 {
     public Text scenarioText;
-    public Button acceptButton;
-    public Button rejectButton;
+    public Button acceptButton; // Kabul butonu
+    public Button rejectButton; // Reddetme butonu
     public Image powerCircle;
     public Image techCircle;
     public Image moneyCircle;
@@ -47,8 +47,10 @@ public class ChoiceSystem : MonoBehaviour
     {
         UpdateCircleValues();
         DisplayScenario();
-        acceptButton.onClick.AddListener(() => MakeChoice(true));
-        rejectButton.onClick.AddListener(() => MakeChoice(false));
+
+        // Butonlara týklama olaylarý atanýyor
+        acceptButton.onClick.AddListener(() => MakeChoice(true));  // Kabul butonu
+        rejectButton.onClick.AddListener(() => MakeChoice(false)); // Reddetme butonu
     }
 
     void DisplayScenario()
