@@ -43,14 +43,76 @@ public class ChoiceSystem : MonoBehaviour
     public Animator moneyAnimator;
     public Animator successAnimator;
 
+
+    private Vector3 initialPosition;   // Kartýn baþlangýç pozisyonu
+    private bool isDragging = false;   // Sürüklenip sürüklenmediðini kontrol eder
+    private Vector2 startTouchPosition; // Baþlangýç dokunma pozisyonu
+    private Vector2 currentTouchPosition; // Þu anki dokunma pozisyonu
+    private float swipeResistanceX = 50f; // Minimum sürükleme mesafesi (direnci)
+
+    public Animator cardAnimator; // Kartýn Animator bileþeni
+
     void Start()
     {
         UpdateCircleValues();
         DisplayScenario();
 
+        // Kartýn baþlangýç pozisyonunu kaydet
+        initialPosition = cardImage.transform.position;
+
         // Butonlara týklama olaylarý atanýyor
         acceptButton.onClick.AddListener(() => MakeChoice(true));  // Kabul butonu
         rejectButton.onClick.AddListener(() => MakeChoice(false)); // Reddetme butonu
+    }
+
+    void Update()
+    {
+        // Fare veya dokunma hareketini kontrol et
+        if (Input.GetMouseButtonDown(0))
+        {
+            isDragging = true;
+            startTouchPosition = Input.mousePosition;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            isDragging = false;
+            CheckSwipeDirection();
+        }
+
+        if (isDragging)
+        {
+            currentTouchPosition = Input.mousePosition;
+            Vector3 offset = currentTouchPosition - startTouchPosition;
+            cardImage.transform.position = initialPosition + offset;
+        }
+    }
+
+    void CheckSwipeDirection()
+    {
+        float deltaX = currentTouchPosition.x - startTouchPosition.x;
+
+        // Eðer sürükleme hareketi belli bir mesafeden uzunsa, hareket yönünü kontrol et
+        if (Mathf.Abs(deltaX) > swipeResistanceX)
+        {
+            if (deltaX > 0)
+            {
+                // Sað kaydýrma hareketi
+                cardAnimator.SetTrigger("OpenRightTrigger");
+                MakeChoice(true);  // Kabul etme seçeneðini tetikle
+            }
+            else
+            {
+                // Sol kaydýrma hareketi
+                cardAnimator.SetTrigger("OpenLeftTrigger");
+                MakeChoice(false); // Reddetme seçeneðini tetikle
+            }
+        }
+        else
+        {
+            // Eðer kaydýrma hareketi yetersizse kartý geri pozisyonuna çek
+            cardImage.transform.position = initialPosition;
+        }
     }
 
     void DisplayScenario()
