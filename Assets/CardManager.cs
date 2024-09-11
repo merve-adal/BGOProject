@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ChoiceSystem : MonoBehaviour
 {
@@ -43,22 +44,19 @@ public class ChoiceSystem : MonoBehaviour
     public Animator moneyAnimator;
     public Animator successAnimator;
 
-
-    private Vector3 initialPosition;   // Kartýn baþlangýç pozisyonu
-    private bool isDragging = false;   // Sürüklenip sürüklenmediðini kontrol eder
-    private Vector2 startTouchPosition; // Baþlangýç dokunma pozisyonu
-    private Vector2 currentTouchPosition; // Þu anki dokunma pozisyonu
-    private float swipeResistanceX = 50f; // Minimum sürükleme mesafesi (direnci)
-
     public Animator cardAnimator; // Kartýn Animator bileþeni
+
+    private Quaternion targetRotation; // Kartýn hedef dönüþü
+    private float rotationSpeed = 5f;  // Dönüþ hýzý
+    private bool isRotating = false;   // Kartýn þu anda dönüp dönmediðini takip eder
 
     void Start()
     {
         UpdateCircleValues();
         DisplayScenario();
 
-        // Kartýn baþlangýç pozisyonunu kaydet
-        initialPosition = cardImage.transform.position;
+        // Baþlangýç rotasyonu
+        targetRotation = cardImage.transform.rotation;
 
         // Butonlara týklama olaylarý atanýyor
         acceptButton.onClick.AddListener(() => MakeChoice(true));  // Kabul butonu
@@ -67,51 +65,23 @@ public class ChoiceSystem : MonoBehaviour
 
     void Update()
     {
-        // Fare veya dokunma hareketini kontrol et
-        if (Input.GetMouseButtonDown(0))
+        if (isRotating)
         {
-            isDragging = true;
-            startTouchPosition = Input.mousePosition;
-        }
+            // Kartýn dönüþünü yavaþça hedef rotasyona doðru yap
+            cardImage.transform.rotation = Quaternion.Slerp(cardImage.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            isDragging = false;
-            CheckSwipeDirection();
-        }
-
-        if (isDragging)
-        {
-            currentTouchPosition = Input.mousePosition;
-            Vector3 offset = currentTouchPosition - startTouchPosition;
-            cardImage.transform.position = initialPosition + offset;
-        }
-    }
-
-    void CheckSwipeDirection()
-    {
-        float deltaX = currentTouchPosition.x - startTouchPosition.x;
-
-        // Eðer sürükleme hareketi belli bir mesafeden uzunsa, hareket yönünü kontrol et
-        if (Mathf.Abs(deltaX) > swipeResistanceX)
-        {
-            if (deltaX > 0)
+            // Eðer kart dönüþünü tamamladýysa
+            if (Quaternion.Angle(cardImage.transform.rotation, targetRotation) < 0.1f)
             {
-                // Sað kaydýrma hareketi
-                cardAnimator.SetTrigger("OpenRightTrigger");
-                MakeChoice(true);  // Kabul etme seçeneðini tetikle
+                cardImage.transform.rotation = targetRotation; // Rotasyonu tam olarak hedefe getir
+                isRotating = false;
+
+                // Kart kapandýysa, yeni kartý göster
+                if (Mathf.Abs(targetRotation.eulerAngles.y) == 90f || Mathf.Abs(targetRotation.eulerAngles.y) == 270f)
+                {
+                    StartCoroutine(ShowNextCard());
+                }
             }
-            else
-            {
-                // Sol kaydýrma hareketi
-                cardAnimator.SetTrigger("OpenLeftTrigger");
-                MakeChoice(false); // Reddetme seçeneðini tetikle
-            }
-        }
-        else
-        {
-            // Eðer kaydýrma hareketi yetersizse kartý geri pozisyonuna çek
-            cardImage.transform.position = initialPosition;
         }
     }
 
@@ -141,6 +111,20 @@ public class ChoiceSystem : MonoBehaviour
 
     void MakeChoice(bool accepted)
     {
+        if (isRotating) return; // Eðer kart dönüyorsa yeni bir dönüþ baþlatma
+
+        // Kartýn hedef dönüþ açýsýný ayarla
+        if (accepted)
+        {
+            targetRotation = Quaternion.Euler(0, 90, 0);  // Kabul için Y ekseninde 90 derece
+        }
+        else
+        {
+            targetRotation = Quaternion.Euler(0, -90, 0); // Reddetme için Y ekseninde -90 derece
+        }
+
+        isRotating = true;
+
         // Senaryoya göre seçim sonuçlarýný iþle
         switch (currentScenario)
         {
@@ -209,18 +193,6 @@ public class ChoiceSystem : MonoBehaviour
                 }
                 break;
         }
-
-        currentScenario++;
-        if (currentScenario < scenarios.Length)
-        {
-            DisplayScenario();
-        }
-        else
-        {
-            scenarioText.text = "Demo Bitti!";
-            acceptButton.gameObject.SetActive(false);
-            rejectButton.gameObject.SetActive(false);
-        }
     }
 
     void ModifyCategories(ref int categoryValue, Image categoryCircle, Text categoryText, int amount, Animator animator)
@@ -248,5 +220,27 @@ public class ChoiceSystem : MonoBehaviour
         techCircle.fillAmount = techValue / 100f;
         moneyCircle.fillAmount = moneyValue / 100f;
         successCircle.fillAmount = successValue / 100f;
+    }
+
+    IEnumerator ShowNextCard()
+    {
+        yield return new WaitForSeconds(0.2f); // Kart kapandýktan sonra bekleme süresi azaltýldý
+
+        currentScenario++;
+        if (currentScenario < scenarios.Length)
+        {
+            // Yeni senaryo ve görseli göster
+            DisplayScenario();
+
+            // Kartýn açýlma rotasyonunu ayarla
+            targetRotation = Quaternion.Euler(0, 0, 0);
+            isRotating = true;
+        }
+        else
+        {
+            scenarioText.text = "Demo Bitti!";
+            acceptButton.gameObject.SetActive(false);
+            rejectButton.gameObject.SetActive(false);
+        }
     }
 }
