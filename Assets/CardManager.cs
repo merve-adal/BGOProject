@@ -5,8 +5,8 @@ using System.Collections;
 public class ChoiceSystem : MonoBehaviour
 {
     public Text scenarioText;
-    public Button acceptButton; // Kabul butonu
-    public Button rejectButton; // Reddetme butonu
+    public Button acceptButton;
+    public Button rejectButton;
     public Image powerCircle;
     public Image techCircle;
     public Image moneyCircle;
@@ -17,8 +17,8 @@ public class ChoiceSystem : MonoBehaviour
     public Text moneyText;
     public Text successText;
 
-    public Image cardImage; // Kartýn image bileþeni
-    public Text cardText;   // Kart üzerindeki metin
+    public Image cardImage;
+    public Text cardText;
 
     private int powerValue = 50;
     private int techValue = 50;
@@ -35,59 +35,63 @@ public class ChoiceSystem : MonoBehaviour
         "Bir grup asi, þehirde bir ayaklanma baþlatmayý planlýyor. Onlara yardým etmeli misiniz?"
     };
 
-    // Kart görselleri için Sprite kaynaklarý
-    public Sprite[] cardImages; // Her senaryo için farklý bir kart görseli olabilir
+    public Sprite[] cardImages;
 
-    // Animator bileþenleri için referanslar
-    public Animator powerAnimator;
-    public Animator techAnimator;
-    public Animator moneyAnimator;
-    public Animator successAnimator;
+    private Quaternion targetRotation;
+    private float rotationSpeed = 5f;
+    private bool isRotating = false;
 
-    public Animator cardAnimator; // Kartýn Animator bileþeni
-
-    private Quaternion targetRotation; // Kartýn hedef dönüþü
-    private float rotationSpeed = 5f;  // Dönüþ hýzý
-    private bool isRotating = false;   // Kartýn þu anda dönüp dönmediðini takip eder
+    private float scaleSpeed = 5f;
+    private bool isScaling = false;
+    private RectTransform currentRectTransform;
+    private Vector3 targetScale;
+    private Vector3 originalScale;
 
     void Start()
     {
         UpdateCircleValues();
         DisplayScenario();
 
-        // Baþlangýç rotasyonu
         targetRotation = cardImage.transform.rotation;
 
-        // Butonlara týklama olaylarý atanýyor
-        acceptButton.onClick.AddListener(() => MakeChoice(true));  // Kabul butonu
-        rejectButton.onClick.AddListener(() => MakeChoice(false)); // Reddetme butonu
+        acceptButton.onClick.AddListener(() => MakeChoice(true));
+        rejectButton.onClick.AddListener(() => MakeChoice(false));
     }
 
     void Update()
     {
         if (isRotating)
         {
-            // Kartýn dönüþünü yavaþça hedef rotasyona doðru yap
             cardImage.transform.rotation = Quaternion.Slerp(cardImage.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
 
-            // Eðer kart dönüþünü tamamladýysa
             if (Quaternion.Angle(cardImage.transform.rotation, targetRotation) < 0.1f)
             {
-                cardImage.transform.rotation = targetRotation; // Rotasyonu tam olarak hedefe getir
+                cardImage.transform.rotation = targetRotation;
                 isRotating = false;
 
-                // Kart kapandýysa, yeni kartý göster
                 if (Mathf.Abs(targetRotation.eulerAngles.y) == 90f || Mathf.Abs(targetRotation.eulerAngles.y) == 270f)
                 {
                     StartCoroutine(ShowNextCard());
                 }
             }
         }
+
+        if (isScaling && currentRectTransform != null)
+        {
+            currentRectTransform.localScale = Vector3.Lerp(currentRectTransform.localScale, targetScale, Time.deltaTime * scaleSpeed);
+
+            if (Vector3.Distance(currentRectTransform.localScale, targetScale) < 0.01f)
+            {
+                currentRectTransform.localScale = targetScale;
+                StartCoroutine(ResetScale(currentRectTransform, originalScale, 1f));
+                isScaling = false;
+                Debug.Log("Scaling complete. Final scale: " + targetScale);
+            }
+        }
     }
 
     void DisplayScenario()
     {
-        // Kart üzerindeki metni ayarla
         if (cardText != null && scenarioText != null)
         {
             cardText.text = scenarios[currentScenario];
@@ -98,10 +102,9 @@ public class ChoiceSystem : MonoBehaviour
             Debug.LogError("cardText veya scenarioText atanmadý!");
         }
 
-        // Kart görselini güncelle
         if (cardImage != null && cardImages != null && cardImages.Length > currentScenario)
         {
-            cardImage.sprite = cardImages[currentScenario]; // Sadece kartýn görselini deðiþtir
+            cardImage.sprite = cardImages[currentScenario];
         }
         else
         {
@@ -111,102 +114,126 @@ public class ChoiceSystem : MonoBehaviour
 
     void MakeChoice(bool accepted)
     {
-        if (isRotating) return; // Eðer kart dönüyorsa yeni bir dönüþ baþlatma
+        if (isRotating) return;
 
-        // Kartýn hedef dönüþ açýsýný ayarla
         if (accepted)
         {
-            targetRotation = Quaternion.Euler(0, 90, 0);  // Kabul için Y ekseninde 90 derece
+            targetRotation = Quaternion.Euler(0, 90, 0);
         }
         else
         {
-            targetRotation = Quaternion.Euler(0, -90, 0); // Reddetme için Y ekseninde -90 derece
+            targetRotation = Quaternion.Euler(0, -90, 0);
         }
 
         isRotating = true;
 
-        // Senaryoya göre seçim sonuçlarýný iþle
         switch (currentScenario)
         {
             case 0:
                 if (accepted)
                 {
-                    ModifyCategories(ref powerValue, powerCircle, powerText, 10, powerAnimator);
-                    ModifyCategories(ref techValue, techCircle, techText, -10, techAnimator);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, 10);
+                    ModifyCategories(ref techValue, techCircle, techText, -10);
                 }
                 else
                 {
-                    ModifyCategories(ref techValue, techCircle, techText, 10, techAnimator);
-                    ModifyCategories(ref powerValue, powerCircle, powerText, -10, powerAnimator);
+                    ModifyCategories(ref techValue, techCircle, techText, 10);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, -10);
                 }
                 break;
 
             case 1:
                 if (accepted)
                 {
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10, moneyAnimator);
-                    ModifyCategories(ref powerValue, powerCircle, powerText, -10, powerAnimator);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, -10);
                 }
                 else
                 {
-                    ModifyCategories(ref successValue, successCircle, successText, 10, successAnimator);
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10, moneyAnimator);
+                    ModifyCategories(ref successValue, successCircle, successText, 10);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10);
                 }
                 break;
 
             case 2:
                 if (accepted)
                 {
-                    ModifyCategories(ref techValue, techCircle, techText, 10, techAnimator);
-                    ModifyCategories(ref successValue, successCircle, successText, -10, successAnimator);
+                    ModifyCategories(ref techValue, techCircle, techText, 10);
+                    ModifyCategories(ref successValue, successCircle, successText, -10);
                 }
                 else
                 {
-                    ModifyCategories(ref powerValue, powerCircle, powerText, 10, powerAnimator);
-                    ModifyCategories(ref techValue, techCircle, techText, -10, techAnimator);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, 10);
+                    ModifyCategories(ref techValue, techCircle, techText, -10);
                 }
                 break;
 
             case 3:
                 if (accepted)
                 {
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10, moneyAnimator);
-                    ModifyCategories(ref successValue, successCircle, successText, -10, successAnimator);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, 10);
+                    ModifyCategories(ref successValue, successCircle, successText, -10);
                 }
                 else
                 {
-                    ModifyCategories(ref powerValue, powerCircle, powerText, 10, powerAnimator);
-                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10, moneyAnimator);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, 10);
+                    ModifyCategories(ref moneyValue, moneyCircle, moneyText, -10);
                 }
                 break;
 
             case 4:
                 if (accepted)
                 {
-                    ModifyCategories(ref successValue, successCircle, successText, 10, successAnimator);
-                    ModifyCategories(ref powerValue, powerCircle, powerText, -10, powerAnimator);
+                    ModifyCategories(ref successValue, successCircle, successText, 10);
+                    ModifyCategories(ref powerValue, powerCircle, powerText, -10);
                 }
                 else
                 {
-                    ModifyCategories(ref techValue, techCircle, techText, 10, techAnimator);
-                    ModifyCategories(ref successValue, successCircle, successText, -10, successAnimator);
+                    ModifyCategories(ref techValue, techCircle, techText, 10);
+                    ModifyCategories(ref successValue, successCircle, successText, -10);
                 }
                 break;
         }
     }
 
-    void ModifyCategories(ref int categoryValue, Image categoryCircle, Text categoryText, int amount, Animator animator)
+    void ModifyCategories(ref int categoryValue, Image categoryCircle, Text categoryText, int amount)
     {
-        int oldValue = categoryValue; // Önceki deðeri sakla
+        // Geçerli deðeri sakla
+        int previousValue = categoryValue;
+
+        // Deðeri güncelle
         categoryValue = Mathf.Clamp(categoryValue + amount, 0, 100);
-        categoryCircle.fillAmount = categoryValue / 100f;
         categoryText.text = categoryValue.ToString();
 
-        // Sadece büyüme animasyonunu tetikle
-        if (categoryValue > oldValue)
+        // Yeni ve eski ölçekleri hesapla
+        float newScale = categoryValue / 50f; // Ölçek aralýðý 0 ile 2 arasýnda
+        float oldScale = previousValue / 50f;
+
+        // Ölçekleme yönünü belirle
+        if (currentRectTransform != categoryCircle.rectTransform)
         {
-            animator.SetTrigger("Grow");
+            currentRectTransform = categoryCircle.rectTransform;
+            originalScale = currentRectTransform.localScale; // Eski ölçeði sakla
         }
+
+        targetScale = new Vector3(newScale, 1f, 1f);
+
+        // Ölçeklemeyi baþlat
+        isScaling = true;
+    }
+
+    IEnumerator ResetScale(RectTransform rectTransform, Vector3 originalScale, float duration)
+    {
+        float elapsed = 0f;
+        Vector3 initialScale = rectTransform.localScale;
+
+        while (elapsed < duration)
+        {
+            rectTransform.localScale = Vector3.Lerp(initialScale, originalScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        rectTransform.localScale = originalScale;
     }
 
     void UpdateCircleValues()
@@ -216,31 +243,24 @@ public class ChoiceSystem : MonoBehaviour
         moneyText.text = moneyValue.ToString();
         successText.text = successValue.ToString();
 
-        powerCircle.fillAmount = powerValue / 100f;
-        techCircle.fillAmount = techValue / 100f;
-        moneyCircle.fillAmount = moneyValue / 100f;
-        successCircle.fillAmount = successValue / 100f;
+        // Ölçekleri doðrudan güncelle
+        powerCircle.rectTransform.localScale = new Vector3(powerValue / 50f, 1f, 1f);
+        techCircle.rectTransform.localScale = new Vector3(techValue / 50f, 1f, 1f);
+        moneyCircle.rectTransform.localScale = new Vector3(moneyValue / 50f, 1f, 1f);
+        successCircle.rectTransform.localScale = new Vector3(successValue / 50f, 1f, 1f);
     }
 
     IEnumerator ShowNextCard()
     {
-        yield return new WaitForSeconds(0.2f); // Kart kapandýktan sonra bekleme süresi azaltýldý
-
         currentScenario++;
+
         if (currentScenario < scenarios.Length)
         {
-            // Yeni senaryo ve görseli göster
-            DisplayScenario();
+            yield return new WaitForSeconds(1f);
 
-            // Kartýn açýlma rotasyonunu ayarla
-            targetRotation = Quaternion.Euler(0, 0, 0);
+            DisplayScenario();
+            targetRotation = Quaternion.identity;
             isRotating = true;
-        }
-        else
-        {
-            scenarioText.text = "Demo Bitti!";
-            acceptButton.gameObject.SetActive(false);
-            rejectButton.gameObject.SetActive(false);
         }
     }
 }
