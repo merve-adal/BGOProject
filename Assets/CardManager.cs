@@ -75,19 +75,6 @@ public class ChoiceSystem : MonoBehaviour
                 }
             }
         }
-
-        if (isScaling && currentRectTransform != null)
-        {
-            currentRectTransform.localScale = Vector3.Lerp(currentRectTransform.localScale, targetScale, Time.deltaTime * scaleSpeed);
-
-            if (Vector3.Distance(currentRectTransform.localScale, targetScale) < 0.01f)
-            {
-                currentRectTransform.localScale = targetScale;
-                StartCoroutine(ResetScale(currentRectTransform, originalScale, 1f));
-                isScaling = false;
-                Debug.Log("Scaling complete. Final scale: " + targetScale);
-            }
-        }
     }
 
     void DisplayScenario()
@@ -198,42 +185,46 @@ public class ChoiceSystem : MonoBehaviour
 
     void ModifyCategories(ref int categoryValue, Image categoryCircle, Text categoryText, int amount)
     {
-        // Geçerli deðeri sakla
         int previousValue = categoryValue;
-
-        // Deðeri güncelle
         categoryValue = Mathf.Clamp(categoryValue + amount, 0, 100);
         categoryText.text = categoryValue.ToString();
 
-        // Yeni ve eski ölçekleri hesapla
         float newScale = categoryValue / 50f; // Ölçek aralýðý 0 ile 2 arasýnda
         float oldScale = previousValue / 50f;
 
-        // Ölçekleme yönünü belirle
         if (currentRectTransform != categoryCircle.rectTransform)
         {
             currentRectTransform = categoryCircle.rectTransform;
-            originalScale = currentRectTransform.localScale; // Eski ölçeði sakla
+            originalScale = currentRectTransform.localScale;
         }
 
         targetScale = new Vector3(newScale, 1f, 1f);
-
-        // Ölçeklemeyi baþlat
-        isScaling = true;
+        StartCoroutine(ScaleAndReset(categoryCircle.rectTransform, targetScale, originalScale, 0.5f)); // 0.5 saniyede geri dön
     }
 
-    IEnumerator ResetScale(RectTransform rectTransform, Vector3 originalScale, float duration)
+    IEnumerator ScaleAndReset(RectTransform rectTransform, Vector3 targetScale, Vector3 originalScale, float duration)
     {
         float elapsed = 0f;
         Vector3 initialScale = rectTransform.localScale;
 
         while (elapsed < duration)
         {
-            rectTransform.localScale = Vector3.Lerp(initialScale, originalScale, elapsed / duration);
+            rectTransform.localScale = Vector3.Lerp(initialScale, targetScale, elapsed / duration);
             elapsed += Time.deltaTime;
             yield return null;
         }
-        rectTransform.localScale = originalScale;
+
+        rectTransform.localScale = targetScale;
+
+        elapsed = 0f; // Sýfýrlayarak geri dönüþ için kullan
+        while (elapsed < duration)
+        {
+            rectTransform.localScale = Vector3.Lerp(targetScale, originalScale, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        rectTransform.localScale = originalScale; // Ölçeði orijinal haline döndür
     }
 
     void UpdateCircleValues()
@@ -243,7 +234,6 @@ public class ChoiceSystem : MonoBehaviour
         moneyText.text = moneyValue.ToString();
         successText.text = successValue.ToString();
 
-        // Ölçekleri doðrudan güncelle
         powerCircle.rectTransform.localScale = new Vector3(powerValue / 50f, 1f, 1f);
         techCircle.rectTransform.localScale = new Vector3(techValue / 50f, 1f, 1f);
         moneyCircle.rectTransform.localScale = new Vector3(moneyValue / 50f, 1f, 1f);
