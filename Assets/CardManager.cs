@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; // Sahne yönetimi için gerekli
 using System.Collections;
 
 public class ChoiceSystem : MonoBehaviour
@@ -251,6 +252,33 @@ public class ChoiceSystem : MonoBehaviour
             DisplayScenario();
             targetRotation = Quaternion.identity;
             isRotating = true;
+        }
+        else
+        {
+            // Seçimlerin sonuçlarýný kontrol et ve en yüksek deðere sahip ekraný yükle
+            int highestValue = Mathf.Max(powerValue, techValue, moneyValue, successValue);
+
+            if (highestValue == powerValue)
+            {
+                SceneManager.LoadScene(6); // Power ekraný
+            }
+            else if (highestValue == techValue)
+            {
+                SceneManager.LoadScene(7); // Tech ekraný
+            }
+            else if (highestValue == moneyValue)
+            {
+                SceneManager.LoadScene(8); // Money ekraný
+            }
+            else if (highestValue == successValue)
+            {
+                SceneManager.LoadScene(9); // Success ekraný
+            }
+            else
+            {
+                // Diðer durumlar için bir varsayýlan sahne yükleyebilirsiniz
+                // Örneðin: SceneManager.LoadScene(0);
+            }
         }
     }
 }

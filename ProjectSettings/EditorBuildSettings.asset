@@ -19,8 +19,20 @@ EditorBuildSettings:
     guid: de6ece165e11bb74891c12ba3d3b3734
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: 8a42654b2f737394e9dcb652f302fdaf
   - enabled: 1
     path: Assets/Scenes/SettingsMenu 1.unity
     guid: d6c3ead782447ca4185b76c89a8e7de2
+  - enabled: 1
+    path: Assets/Scenes/powerScreen.unity
+    guid: d291e3a1dd868494689f5dee848a4076
+  - enabled: 1
+    path: Assets/Scenes/techScreen.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/moneyScreen.unity
+    guid: 06f8242f45ec3174581e1a83ecc817b1
+  - enabled: 1
+    path: Assets/Scenes/successScreen.unity
+    guid: f5ee83a7fbdb2c34ba6e32513978c3c2
   m_configObjects: {}
