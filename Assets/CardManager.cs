@@ -35,6 +35,35 @@ public class ChoiceSystem : MonoBehaviour
         "Bir suç lordu, size büyük miktarda para karþýlýðýnda þehirdeki bir bölgeyi kontrol etmeyi teklif ediyor. Kabul edecek misiniz?",
         "Bir grup asi, þehirde bir ayaklanma baþlatmayý planlýyor. Onlara yardým etmeli misiniz?"
     };
+    private string[] powerScenarios = {
+    "Bir rakip çetenin lideri, size karþý bir meydan okumada bulunuyor. Gücünüzü gösterip meydan okumayý kabul edecek misiniz?",
+    "Þehirdeki güvenlik birimleri, gücünüzün arttýðýný fark edip sizi gözlemlemeye baþladý. Onlarla iþbirliði yapmalý mýsýnýz?",
+    "Bir isyan baþlýyor ve lider sizden destek istiyor. Ýsyaný bastýrmak için yardým etmeli misiniz?",
+    "Þehrin en güçlü grubuyla ittifak kurma fýrsatýnýz var. Bu fýrsatý deðerlendirmeli misiniz?",
+    "Halk, gücünüzden dolayý size karþý çekimser davranmaya baþladý. Ýmajýnýzý düzeltmek için bir yardým kampanyasý baþlatmalý mýsýnýz?"
+    };
+    private string[] techScenarios = {
+    "Bir teknoloji firmasý, þehri daha verimli yönetmenizi saðlayacak yeni bir yazýlým sunuyor. Kabul edecek misiniz?",
+    "Yapay zekalar, kontrolünüzden çýkmaya baþladý. Onlarý durdurmak için bir çözüm aramalý mýsýnýz?",
+    "Þehirdeki enerji kaynaklarý tükenmek üzere. Yeni bir yenilenebilir enerji kaynaðý geliþtirilmeli mi?",
+    "Teknolojik cihazlar halk arasýnda hýzla yayýlýyor, ancak bu durumun bazý tehlikeleri var. Yeni güvenlik önlemleri almalý mýsýnýz?",
+    "Þehrin altyapýsýný geliþtirmek için yeni bir inovasyon merkezi kurma fýrsatýnýz var. Bunu desteklemeli misiniz?"
+    };
+
+    private string[] moneyScenarios = {
+    "Bir yatýrýmcý size þehirde büyük bir ticaret merkezi kurma teklifiyle geldi. Kabul edecek misiniz?",
+    "Bir suç lordu, size büyük miktarda para teklif ederek bazý bölgelerde kontrol saðlamak istiyor. Teklifi kabul edecek misiniz?",
+    "Bir iþ adamý þehirde büyük bir ekonomik reform baþlatmak istiyor. Ona yardým etmeli misiniz?",
+    "Ekonomik krizle karþý karþýyasýnýz. Þehirdeki varlýklarý satýp ekonomiyi toparlamayý denemeli misiniz?",
+    "Bir grup giriþimci, þehirde büyük bir start-up ekosistemi kurmak istiyor. Onlara destek vermeli misiniz?"
+    };
+    private string[] successScenarios = {
+    "Baþarýlarýnýz nedeniyle size bir ödül teklif ediliyor. Kabul edip törende boy göstermeli misiniz?",
+    "Bir ünlü, baþarýlarýnýzý kutlamak için sizi bir etkinliðe davet ediyor. Bu etkinliðe katýlmalý mýsýnýz?",
+    "Baþarýnýz halk arasýnda büyük yanký buluyor, ancak bu durum bazý düþmanlar kazanmanýza sebep oldu. Onlarla baþa çýkmak için bir strateji geliþtirmeli misiniz?",
+    "Baþarýnýzý daha fazla büyütmek için þehirdeki en güçlü kiþilerle iþbirliði yapma fýrsatýnýz var. Bu iþbirliðini yapmalý mýsýnýz?",
+    "Baþarýlarýnýz nedeniyle þehrin en zengin adamý sizi kiþisel danýþmaný yapmayý teklif ediyor. Bu teklifi kabul etmeli misiniz?"
+    };
 
     public Sprite[] cardImages;
 
@@ -80,25 +109,33 @@ public class ChoiceSystem : MonoBehaviour
 
     void DisplayScenario()
     {
-        if (cardText != null && scenarioText != null)
+        if (currentScenario < scenarios.Length)
         {
-            cardText.text = scenarios[currentScenario];
-            scenarioText.text = scenarios[currentScenario];
-        }
-        else
-        {
-            Debug.LogError("cardText veya scenarioText atanmadý!");
-        }
+            if (cardText != null && scenarioText != null)
+            {
+                cardText.text = scenarios[currentScenario];
+                scenarioText.text = scenarios[currentScenario];
+            }
+            else
+            {
+                Debug.LogError("cardText veya scenarioText atanmadý!");
+            }
 
-        if (cardImage != null && cardImages != null && cardImages.Length > currentScenario)
-        {
-            cardImage.sprite = cardImages[currentScenario];
+            if (cardImage != null && cardImages != null && cardImages.Length > currentScenario)
+            {
+                cardImage.sprite = cardImages[currentScenario];
+            }
+            else
+            {
+                Debug.LogError("cardImage veya cardImages atanmadý ya da cardImages dizisi boþ veya yetersiz!");
+            }
         }
         else
         {
-            Debug.LogError("cardImage veya cardImages atanmadý ya da cardImages dizisi boþ veya yetersiz!");
+            Debug.LogError("currentScenario, senaryo uzunluðunu aþýyor!");
         }
     }
+
 
     void MakeChoice(bool accepted)
     {
@@ -249,35 +286,41 @@ public class ChoiceSystem : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
 
-            DisplayScenario();
+            DisplayScenario(); // Yeni senaryoyu göstermek için ekrana yazdýrma
             targetRotation = Quaternion.identity;
             isRotating = true;
         }
         else
         {
-            // Seçimlerin sonuçlarýný kontrol et ve en yüksek deðere sahip ekraný yükle
             int highestValue = Mathf.Max(powerValue, techValue, moneyValue, successValue);
 
             if (highestValue == powerValue)
             {
+                currentScenario = 0;
+                scenarios = powerScenarios; // Güç senaryolarýna geçiþ
+                DisplayScenario(); // Yeni senaryoyu hemen ekrana yazdýrýn
                 SceneManager.LoadScene(6); // Power ekraný
             }
             else if (highestValue == techValue)
             {
+                currentScenario = 0;
+                scenarios = techScenarios; // Teknoloji senaryolarýna geçiþ
+                DisplayScenario(); // Yeni senaryoyu hemen ekrana yazdýrýn
                 SceneManager.LoadScene(7); // Tech ekraný
             }
             else if (highestValue == moneyValue)
             {
+                currentScenario = 0;
+                scenarios = moneyScenarios; // Para senaryolarýna geçiþ
+                DisplayScenario(); // Yeni senaryoyu hemen ekrana yazdýrýn
                 SceneManager.LoadScene(8); // Money ekraný
             }
             else if (highestValue == successValue)
             {
+                currentScenario = 0;
+                scenarios = successScenarios; // Baþarý senaryolarýna geçiþ
+                DisplayScenario(); // Yeni senaryoyu hemen ekrana yazdýrýn
                 SceneManager.LoadScene(9); // Success ekraný
-            }
-            else
-            {
-                // Diðer durumlar için bir varsayýlan sahne yükleyebilirsiniz
-                // Örneðin: SceneManager.LoadScene(0);
             }
         }
     }
