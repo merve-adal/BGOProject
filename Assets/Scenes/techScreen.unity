@@ -1078,6 +1078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4216357654031961950}
   - component: {fileID: 2930471948564038456}
+  - component: {fileID: 4216357654031961951}
   m_Layer: 5
   m_Name: CardManager
   m_TagString: Untagged
@@ -1706,12 +1707,12 @@ MonoBehaviour:
   cardImage: {fileID: 931172414598952629}
   cardText: {fileID: 1283007730}
   cardImages:
-  - {fileID: 21300000, guid: 69ce03a3888d7bc47910bb279e29655c, type: 3}
-  - {fileID: 21300000, guid: d3ed0755bcba9514ab2027ec8497b4cb, type: 3}
-  - {fileID: 21300000, guid: ea1db8e16214266489c7be90c57ab166, type: 3}
-  - {fileID: 21300000, guid: 67850e5800537334c95fcec117b14be0, type: 3}
-  - {fileID: 21300000, guid: 000b7dd37ac21084f9c544869c675c31, type: 3}
-  - {fileID: 21300000, guid: 4619f014cd5fe1649a34cde2961025c8, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
 --- !u!224 &2936822646645458916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2043,6 +2044,38 @@ RectTransform:
   m_AnchoredPosition: {x: 14713.508, y: 7973.9956}
   m_SizeDelta: {x: 305.48, y: 402.39}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4216357654031961951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475549167983986446}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44a45832a0677d46b591e5798b23ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenarioText: {fileID: 1409608781698378088}
+  acceptButton: {fileID: 470413749}
+  rejectButton: {fileID: 1561096657}
+  powerCircle: {fileID: 5557875293398197972}
+  techCircle: {fileID: 1298763507381880033}
+  moneyCircle: {fileID: 658313775311728247}
+  successCircle: {fileID: 5919451945938871648}
+  powerText: {fileID: 6311903218174111352}
+  techText: {fileID: 6218273899746661157}
+  moneyText: {fileID: 6227382308683083124}
+  successText: {fileID: 2530894507587866781}
+  techCardImages:
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  - {fileID: 21300000, guid: a17dd9ceb10e34b43b69512c7944fbb7, type: 3}
+  cardImage: {fileID: 931172414598952629}
+  cardText: {fileID: 1283007730}
 --- !u!1 &4858495454775176202
 GameObject:
   m_ObjectHideFlags: 0
@@ -3855,7 +3888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8470589, g: 0.78823537, b: 0.9333334, a: 1}
+  m_Color: {r: 0.7176471, g: 0.7176471, b: 0.7176471, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

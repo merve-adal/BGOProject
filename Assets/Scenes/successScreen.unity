@@ -1706,12 +1706,12 @@ MonoBehaviour:
   cardImage: {fileID: 931172414598952629}
   cardText: {fileID: 1283007730}
   cardImages:
-  - {fileID: 21300000, guid: 69ce03a3888d7bc47910bb279e29655c, type: 3}
-  - {fileID: 21300000, guid: d3ed0755bcba9514ab2027ec8497b4cb, type: 3}
-  - {fileID: 21300000, guid: ea1db8e16214266489c7be90c57ab166, type: 3}
-  - {fileID: 21300000, guid: 67850e5800537334c95fcec117b14be0, type: 3}
-  - {fileID: 21300000, guid: 000b7dd37ac21084f9c544869c675c31, type: 3}
-  - {fileID: 21300000, guid: 4619f014cd5fe1649a34cde2961025c8, type: 3}
+  - {fileID: 21300000, guid: 42f565ce7e89abb4988fad04b40d98f4, type: 3}
+  - {fileID: 21300000, guid: 42f565ce7e89abb4988fad04b40d98f4, type: 3}
+  - {fileID: 21300000, guid: 42f565ce7e89abb4988fad04b40d98f4, type: 3}
+  - {fileID: 21300000, guid: 42f565ce7e89abb4988fad04b40d98f4, type: 3}
+  - {fileID: 21300000, guid: 42f565ce7e89abb4988fad04b40d98f4, type: 3}
+  - {fileID: 21300000, guid: 42f565ce7e89abb4988fad04b40d98f4, type: 3}
 --- !u!224 &2936822646645458916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3855,7 +3855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8470589, g: 0.78823537, b: 0.9333334, a: 1}
+  m_Color: {r: 0.7176471, g: 0.7176471, b: 0.7176471, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
